@@ -1,11 +1,46 @@
-name: Devolop
+name: devolop_workspace
+repository: https://github.com/darolishes/DevolopWorkspace
 
 packages:
-  - packages/**
+  - packages/*
+  - packages/*/*
+  - packages/*/*/*
+  - tests
+
+command:
+  bootstrap:
+    runPubGetInParallel: false
+    usePubspecOverrides: true
 
 scripts:
-  bootstrap: melos bootstrap
-  clean: melos clean
-  test: melos exec -- flutter test
-  analyze: melos exec -- flutter analyze
-  publish: melos publish --skip-private
+  lint:
+    run: flutter analyze .
+    description: Führen Sie statische Analyseprüfungen aus.
+
+  test:
+    run: flutter test
+    description: Führen Sie Flutter-Tests aus.
+
+  build:
+    run: flutter build
+    description: Führen Sie den Flutter-Buildprozess aus.
+
+  format:
+    run: flutter format .
+    description: Formatieren Sie den Flutter-Code.
+
+  clean:
+    run: flutter clean
+    description: Löschen Sie den Flutter-Build-Cache.
+
+  generate:
+    run: flutter packages pub run build_runner build --delete-conflicting-outputs
+    description: Führen Sie Build-Runner zur Codegenerierung aus.
+
+  documentation:
+    run: flutter packages pub run dartdoc
+    description: Generieren Sie die Dokumentation für Ihr Projekt.
+
+  release:
+    run: flutter pub publish --dry-run
+    description: Überprüfen Sie das Publizieren Ihres Projekts.

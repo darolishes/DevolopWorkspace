@@ -1,99 +1,185 @@
-**Entwicklungsplan**
+Ein umfassendes Tool für Entwickler zur Verwaltung von Projekten, Servern und Entwicklungsumgebungen zu schaffen, das benutzerfreundlich, skalierbar und sicher ist.
 
-**Ziele**
+#### Phase 1: Grundlagen und Architektur
 
-Das Ziel dieses Entwicklungsplans ist es, ein Tool für Entwickler zu erstellen, das die Verwaltung von Entwicklungsumgebungen, Projekten und Todos ermöglicht. Das Tool soll einfach zu bedienen, skalierbar und sicher sein.
+1. **Basisklassen und Dienste:**
 
-**Anforderungen**
+   - Erstellung von Basisklassen für Modelle, Dienste und ViewModels.
 
-Das Tool muss die folgenden Anforderungen erfüllen:
+   dartCopy code
 
-- **Kernfunktionalität:**
-  - CRUD-Operationen für Projekte, Server und Entwicklungsumgebungen
-  - Verwaltung von Abhängigkeiten und Dienstprogrammen
-  - Generische Datenbankklasse für SQLite
-- **Benutzerfreundlichkeit:**
-  - Intuitivste Benutzeroberfläche
-  - Angemessene Eingabeaufforderungen
-  - Angemessene Fehlermeldungen
-- **Skalierbarkeit:**
-  - Modulare Architektur
-  - Flexibles Datenmodell
-  - Effiziente Datenspeicherung
-- **Sicherheit:**
-  - Authentifizierung und Autorisierung
-  - Verschlüsselung
-  - Schutz vor Angriffen
+   `// Define abstract classes for models, services, and ViewModels`
 
-**Annahmen**
+2. **Generische Datenbankklasse:**
 
-Für die Entwicklung des Tools werden folgende Annahmen getroffen:
+   - Implementierung einer generischen Datenbankklasse mit ORM.
 
-- Die Entwickler haben Grundkenntnisse in Flutter und Dart.
-- Die Entwickler haben Zugang zu einem Entwicklungscomputer mit Flutter und Dart installiert.
+   dartCopy code
 
-**Ablauf**
+   `// Implement generic database class using moor or sqflite`
 
-Die Entwicklung des Tools erfolgt in folgenden Schritten:
+3. **Dependency-Injection-System:**
 
-1. **Grundlagen:**
-   - Einrichtung des Melos-Workspaces
-   - Implementierung der Basisklassen für Modelle, Dienste und ViewModels
-   - Implementierung einer generischen Datenbankklasse für SQLite
-2. **Projektmanagement-Package:**
-   - Implementierung der Klassen für das Projektmanagement-Package
-3. **Servermanagement-Package:**
-   - Implementierung der Klassen für das Servermanagement-Package
-4. **Entwicklungsumgebungs-Management-Package:**
-   - Implementierung der Klassen für das Entwicklungsumgebungs-Management-Package
-5. **Tests:**
-   - Implementierung von Unit-Tests für alle Module
-6. **Veröffentlichung:**
-   - Erstellung und Veröffentlichung des Tools
+   - Verwendung von `get_it` für Dependency Injection.
 
-**Details**
+   dartCopy code
 
-**1\. Grundlagen**
+   `// Using get_it for dependency injection`
 
-Die folgenden Schritte werden in diesem Schritt durchgeführt:
+4. **RESTful-API-Unterstützung:**
 
-1. Erstellen einer neuen Melos-Workspace-Konfiguration
-2. Erstellen eines Packages für jedes Feature
-3. Strukturieren der Packages nach dem MVC-Muster
-4. Implementierung der Basisklassen für Modelle, Dienste und ViewModels
-5. Implementierung einer generischen Datenbankklasse für SQLite
+   - Implementierung einer RESTful-API mit OpenAPI-Spezifikationen.
 
-**2\. Projektmanagement-Package**
+   dartCopy code
 
-Die folgenden Schritte werden in diesem Schritt durchgeführt:
+   `// Implement RESTful API and use OpenAPI for documentation`
 
-1. Implementierung der Klassen für das Projektmanagement-Package
-2. Implementierung der Benutzeroberfläche für das Projektmanagement
+#### Phase 2: Projektmanagement-Modul
 
-**3\. Servermanagement-Package**
+1. **CRUD-Operationen:**
 
-Die folgenden Schritte werden in diesem Schritt durchgeführt:
+   - Implementierung der CRUD-Operationen für Projekte.
 
-1. Implementierung der Klassen für das Servermanagement-Package
-2. Implementierung der Benutzeroberfläche für das Servermanagement
+   dartCopy code
 
-**4\. Entwicklungsumgebungs-Management-Package**
+   `// Implement CRUD operations for projects`
 
-Die folgenden Schritte werden in diesem Schritt durchgeführt:
+2. **Benutzeroberfläche:**
 
-1. Implementierung der Klassen für das Entwicklungsumgebungs-Management-Package
-2. Implementierung der Benutzeroberfläche für das Entwicklungsumgebungs-Management
+   - Erstellung der UI mit modernem und ansprechendem Design.
 
-**5\. Tests**
+   dartCopy code
 
-Die folgenden Schritte werden in diesem Schritt durchgeführt:
+   `// Use Material Design or custom design language for a modern UI`
 
-1. Implementierung von Unit-Tests für alle Module
-2. Durchführung der Unit-Tests
+3. **Eingabevalidierung und -hilfe:**
 
-**6\. Veröffentlichung**
+   - Implementierung von Eingabevalidierung und Tooltips.
 
-Die folgenden Schritte werden in diesem Schritt durchgeführt:
+   dartCopy code
 
-1. Erstellung einer Veröffentlichungsversion des Tools
-2. Veröffentlichung des Tools
+   `// Implement input validation and tooltips`
+
+4. **Onboarding-Prozess:**
+
+   - Erstellung eines Onboarding-Flows.
+
+   dartCopy code
+
+   `// Create an onboarding flow with tutorials and quick tips`
+
+#### Phase 3: Servermanagement-Modul
+
+1. **CRUD-Operationen:**
+
+   - Implementierung der CRUD-Operationen für Server.
+
+   dartCopy code
+
+   `// Implement CRUD operations for servers`
+
+2. **SSH-Verbindung:**
+
+   - Implementierung der SSH-Verbindungsfunktionalität.
+
+   dartCopy code
+
+   `// Using ssh package for SSH connections`
+
+#### Phase 4: Entwicklungsumgebungs-Modul
+
+1. **CRUD-Operationen:**
+
+   - Implementierung der CRUD-Operationen für Entwicklungsumgebungen.
+
+   dartCopy code
+
+   `// Implement CRUD operations for development environments`
+
+2. **Docker-Integration:**
+
+   - Docker-Integration für Container-Management.
+
+   dartCopy code
+
+   `// Using docker_api package for Docker integration`
+
+#### Phase 5: Skalierbarkeit und Performance
+
+1. **Microservices-Architektur:**
+
+   - Implementierung einer Microservices-Architektur.
+
+   dartCopy code
+
+   `// Implement microservices architecture and use Kubernetes for orchestration`
+
+2. **Caching und Datenbank-Sharding:**
+
+   - Implementierung von Caching-Strategien und Datenbank-Sharding.
+
+   dartCopy code
+
+   `// Implement caching using Redis and database sharding for performance`
+
+#### Phase 6: Sicherheitsmodul
+
+1. **Authentifizierung und 2FA:**
+
+   - Implementierung von Authentifizierung und Zwei-Faktor-Authentifizierung.
+
+   dartCopy code
+
+   `// Implement JWT or OAuth2 for authentication and add 2FA`
+
+2. **Datenverschlüsselung:**
+
+   - Implementierung der Datenverschlüsselung.
+
+   dartCopy code
+
+   `// Implement data encryption at rest and in transit`
+
+3. **Rate Limiting und DDoS-Schutz:**
+
+   - Implementierung von Rate Limiting und DDoS-Schutz.
+
+   dartCopy code
+
+   `// Implement rate limiting and basic DDoS protection`
+
+#### Phase 7: Tests und Qualitätssicherung
+
+1. **Unit- und Integrationstests:**
+
+   - Implementierung von Unit- und Integrationstests.
+
+   dartCopy code
+
+   `// Implement unit and integration tests using Flutter's test package`
+
+2. **Performance-Tests:**
+
+   - Durchführung von Performance-Tests.
+
+   dartCopy code
+
+   `// Conduct performance tests to ensure scalability`
+
+#### Phase 8: Dokumentation
+
+1. **Entwicklerdokumentation:**
+
+   - Erstellung einer umfassenden Entwicklerdokumentation.
+
+   dartCopy code
+
+   `// Using Docusaurus for developer documentation`
+
+2. **Benutzerhandbuch:**
+
+   - Erstellung eines detaillierten Benutzerhandbuchs.
+
+   dartCopy code
+
+   `// Create a detailed user manual`
