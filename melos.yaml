@@ -1,0 +1,11 @@
+name: Devolop
+
+packages:
+  - packages/**
+
+scripts:
+  bootstrap: melos bootstrap
+  clean: melos clean
+  test: melos exec -- flutter test
+  analyze: melos exec -- flutter analyze
+  publish: melos publish --skip-private
