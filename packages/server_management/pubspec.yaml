@@ -1,0 +1,32 @@
+name: server_management
+description: Server management tools and services for Devolop.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: "^3.1.0"
+
+dependencies:
+  core:
+    path: ../core
+  flutter:
+    sdk: flutter
+  http: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# The following section is specific to Flutter.
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.example.server_management
+        pluginClass: ServerManagementPlugin
+      ios:
+        pluginClass: ServerManagementPlugin
+
+# Exporting variables and functionalities as per the plan
+export:
+  - lib/services/server_monitoring_service.dart

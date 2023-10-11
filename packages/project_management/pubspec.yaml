@@ -1,0 +1,17 @@
+name: project_management
+description: CRUD-Operationen für Projekte in Devolop
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: "^3.1.0"
+
+dependencies:
+  core:
+    path: ../core
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

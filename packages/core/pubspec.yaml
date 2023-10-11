@@ -1,0 +1,31 @@
+name: core
+description: Core functionalities and business logic for DevManagementPlatform.
+version: 0.0.1
+
+publish_to: none
+
+environment:
+  sdk: "^3.1.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  get_it: ^7.6.4
+  moor: ^4.6.1+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.1.7
+
+packages:
+    - name: "core"
+      description: "Kernfunktionalitäten und Geschäftslogik"
+      files:
+        - "models.dart":
+          imports: ["package:flutter/foundation.dart"]
+          classes: ["Project", "Server", "Environment"]
+        - "services.dart":
+          imports: ["'models.dart'"]
+          classes: ["ProjectService", "ServerService", "EnvironmentService"]
+          methods: ["create", "read", "update", "delete"]

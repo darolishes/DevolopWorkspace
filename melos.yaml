@@ -10,7 +10,6 @@ packages:
 command:
   bootstrap:
     runPubGetInParallel: false
-    usePubspecOverrides: true
 
 scripts:
   lint:
@@ -44,3 +43,7 @@ scripts:
   release:
     run: flutter pub publish --dry-run
     description: Überprüfen Sie das Publizieren Ihres Projekts.
+
+  fluttergen:
+    run: flutter pub get && flutter pub run flutter_gen
+    description: Führen Sie flutter_gen zur Ressourcengenerierung aus.
