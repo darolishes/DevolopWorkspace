@@ -1,16 +1,12 @@
-import 'package:core/devolop_core.dart';
+import '../models/devolop_model.dart';
 
 /// DevolopService: Abstract class for services
+///
+/// This class is an abstract class for services.
+/// It is used to create, read, update and delete entities.
 abstract class DevolopService<T extends DevolopModel> {
-  /// Create a new entity
   Future<T> create(T entity);
-
-  /// Read an entity by its ID
   Future<T> read(String id);
-
-  /// Update an existing entity
   Future<T> update(T entity);
-
-  /// Delete an entity by its ID
   Future<void> delete(String id);
 }

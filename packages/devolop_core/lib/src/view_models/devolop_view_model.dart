@@ -1,9 +1,13 @@
+import '../services/devolop_service.dart';
+
 abstract class DevolopViewModel {
-  void init() {
-    // Initialization logic here
+  DevolopService? service;
+
+  void init(DevolopService service) {
+    this.service = service;
   }
 
   void dispose() {
-    // Cleanup logic here
+    service = null;
   }
 }
