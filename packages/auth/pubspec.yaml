@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   core:
-    path: ../core
+    path: ../devolop_core
   firebase_auth: ^4.10.1
   google_sign_in: ^6.1.5
 

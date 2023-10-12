@@ -1,4 +1,4 @@
-name: env_management
+name: devolop_env_management
 description: Environment management tools and services for DevManagementPlatform.
 version: 0.0.1
 publish_to: none
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   core:
-    path: ../core
+    path: ../devolop_core
   dotenv: ^4.1.0
 
 dev_dependencies:

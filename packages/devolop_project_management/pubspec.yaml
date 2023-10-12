@@ -1,4 +1,4 @@
-name: project_management
+name: devolop_project_management
 description: CRUD-Operationen für Projekte in Devolop
 version: 0.0.1
 publish_to: none
@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   core:
-    path: ../core
+    path: ../devolop_core
   flutter:
     sdk: flutter
 
