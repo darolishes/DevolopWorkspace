@@ -1,5 +1,5 @@
-name: core
-description: Core functionalities and business logic for DevManagementPlatform.
+name: devolop_core
+description: Core functionalities and business logic for Devolop.
 version: 0.0.1
 
 publish_to: none

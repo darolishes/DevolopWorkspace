@@ -1,3 +1,4 @@
+
 name: devolop_workspace
 repository: https://github.com/darolishes/DevolopWorkspace
 
@@ -9,7 +10,7 @@ packages:
 
 command:
   bootstrap:
-    runPubGetInParallel: false
+    runPubGetInParallel: true
 
 scripts:
   lint:
@@ -26,24 +27,20 @@ scripts:
 
   format:
     run: flutter format .
-    description: Formatieren Sie den Flutter-Code.
+    description: Formatieren Sie den Code.
 
   clean:
     run: flutter clean
-    description: Löschen Sie den Flutter-Build-Cache.
+    description: Bereinigen Sie das Build-Verzeichnis.
 
-  generate:
-    run: flutter packages pub run build_runner build --delete-conflicting-outputs
-    description: Führen Sie Build-Runner zur Codegenerierung aus.
+  pub_get:
+    run: melos run pub get
+    description: Führen Sie "pub get" für alle Pakete aus.
 
-  documentation:
-    run: flutter packages pub run dartdoc
-    description: Generieren Sie die Dokumentation für Ihr Projekt.
+  coverage:
+    run: flutter test --coverage
+    description: Generieren Sie Codeabdeckungsberichte.
 
-  release:
-    run: flutter pub publish --dry-run
-    description: Überprüfen Sie das Publizieren Ihres Projekts.
-
-  fluttergen:
-    run: flutter pub get && flutter pub run flutter_gen
-    description: Führen Sie flutter_gen zur Ressourcengenerierung aus.
+  pre_commit:
+    run: melos run lint && melos run test && melos run format
+    description: Führen Sie alle notwendigen Checks vor einem Commit aus.
