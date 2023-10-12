@@ -1,0 +1,65 @@
+devolop_auth:
+  abstract:
+    auth_service:
+      class: 'AuthService'
+      extends: ['BaseService']
+      implements: []
+      imports: ["package:devolop_core/abstract/base_service.dart"]
+      description: "Abstract class defining the interface for all authentication services. Extends BaseService from devolop_core package."
+      methods: ["signIn", "signOut", "getCurrentUser"]
+      constants: []
+      exports: []
+      parts: []
+    user:
+      class: 'User'
+      extends: ['BaseModel']
+      implements: []
+      imports: ["package:devolop_core/abstract/base_model.dart"]
+      description: "Class representing the user and contains fields like id, email, displayName, etc. Extends BaseModel from devolop_core package."
+      methods: []
+      constants: []
+      exports: []
+      parts: []
+  services:
+    firebase_auth_service:
+      class: 'FirebaseAuthService'
+      extends: ['AuthService']
+      implements: []
+      imports: ["package:devolop_auth/abstract/auth_service.dart"]
+      description: "Class implementing AuthService abstract class, uses Firebase for authentication."
+      methods: ["signIn", "signUp", "signOut"]
+      constants: []
+      exports: []
+      parts: []
+  utils:
+    auth_injector:
+      class: 'AuthInjector'
+      extends: []
+      implements: []
+      imports: ["package:devolop_core/utils/injector.dart"]
+      description: "Class used for dependency injection regarding authentication. Uses Injector class from devolop_core package."
+      methods: []
+      constants: []
+      exports: []
+      parts: []
+  constants:
+    auth_constants:
+      class: 'AuthConstants'
+      extends: []
+      implements: []
+      imports: []
+      description: "Class containing all the constant values used in the devolop_auth package."
+      methods: []
+      constants: ["SIGNIN_ERROR", "SIGNOUT_ERROR"]
+      exports: []
+      parts: []
+  devolop_auth:
+    class: ''
+    extends: []
+    implements: []
+    imports: ["package:devolop_auth/abstract/auth_service.dart", "package:devolop_auth/abstract/user.dart", "package:devolop_auth/services/firebase_auth_service.dart", "package:devolop_auth/utils/auth_injector.dart", "package:devolop_auth/constants/auth_constants.dart"]
+    description: "Central entry point for the devolop_auth package. Exports all relevant classes and functions."
+    methods: []
+    constants: []
+    exports: ["AuthService", "User", "FirebaseAuthService", "AuthInjector", "AuthConstants"]
+    parts: []
