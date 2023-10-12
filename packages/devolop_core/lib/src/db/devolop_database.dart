@@ -1,9 +1,10 @@
 // src/db/devolop_database.dart
 import 'package:moor/moor.dart';
+import 'develop_dao.dart';
 
 part 'devolop_database.g.dart';
 
-@DataClassName('DevolopEntity')
+@DataClassName('DevelopEntity')
 class DevolopTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   DateTimeColumn get createdAt => dateTime().nullable()();

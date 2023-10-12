@@ -7,26 +7,20 @@ part of 'devolop_database.dart';
 // **************************************************************************
 
 // ignore_for_file: type=lint
-class Devolop extends DataClass implements Insertable<Devolop> {
+class DevelopEntity extends DataClass implements Insertable<DevelopEntity> {
   final int id;
-  final String name;
-  final DateTime createdAt;
+  final DateTime? createdAt;
   final DateTime? updatedAt;
-  Devolop(
-      {required this.id,
-      required this.name,
-      required this.createdAt,
-      this.updatedAt});
-  factory Devolop.fromData(Map<String, dynamic> data, GeneratedDatabase db,
+  DevelopEntity({required this.id, this.createdAt, this.updatedAt});
+  factory DevelopEntity.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    return Devolop(
+    return DevelopEntity(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      name: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
       createdAt: const DateTimeType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}created_at'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
       updatedAt: const DateTimeType()
           .mapFromDatabaseResponse(data['${effectivePrefix}updated_at']),
     );
@@ -35,32 +29,33 @@ class Devolop extends DataClass implements Insertable<Devolop> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
-    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || createdAt != null) {
+      map['created_at'] = Variable<DateTime?>(createdAt);
+    }
     if (!nullToAbsent || updatedAt != null) {
       map['updated_at'] = Variable<DateTime?>(updatedAt);
     }
     return map;
   }
 
-  DevolopsCompanion toCompanion(bool nullToAbsent) {
-    return DevolopsCompanion(
+  DevolopTableCompanion toCompanion(bool nullToAbsent) {
+    return DevolopTableCompanion(
       id: Value(id),
-      name: Value(name),
-      createdAt: Value(createdAt),
+      createdAt: createdAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdAt),
       updatedAt: updatedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(updatedAt),
     );
   }
 
-  factory Devolop.fromJson(Map<String, dynamic> json,
+  factory DevelopEntity.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
-    return Devolop(
+    return DevelopEntity(
       id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      createdAt: serializer.fromJson<DateTime?>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime?>(json['updatedAt']),
     );
   }
@@ -69,25 +64,21 @@ class Devolop extends DataClass implements Insertable<Devolop> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'createdAt': serializer.toJson<DateTime?>(createdAt),
       'updatedAt': serializer.toJson<DateTime?>(updatedAt),
     };
   }
 
-  Devolop copyWith(
-          {int? id, String? name, DateTime? createdAt, DateTime? updatedAt}) =>
-      Devolop(
+  DevelopEntity copyWith({int? id, DateTime? createdAt, DateTime? updatedAt}) =>
+      DevelopEntity(
         id: id ?? this.id,
-        name: name ?? this.name,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
   @override
   String toString() {
-    return (StringBuffer('Devolop(')
+    return (StringBuffer('DevelopEntity(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -95,56 +86,48 @@ class Devolop extends DataClass implements Insertable<Devolop> {
   }
 
   @override
-  int get hashCode => Object.hash(id, name, createdAt, updatedAt);
+  int get hashCode => Object.hash(id, createdAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Devolop &&
+      (other is DevelopEntity &&
           other.id == this.id &&
-          other.name == this.name &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
 
-class DevolopsCompanion extends UpdateCompanion<Devolop> {
+class DevolopTableCompanion extends UpdateCompanion<DevelopEntity> {
   final Value<int> id;
-  final Value<String> name;
-  final Value<DateTime> createdAt;
+  final Value<DateTime?> createdAt;
   final Value<DateTime?> updatedAt;
-  const DevolopsCompanion({
+  const DevolopTableCompanion({
     this.id = const Value.absent(),
-    this.name = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
-  DevolopsCompanion.insert({
+  DevolopTableCompanion.insert({
     this.id = const Value.absent(),
-    required String name,
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
-  }) : name = Value(name);
-  static Insertable<Devolop> custom({
+  });
+  static Insertable<DevelopEntity> custom({
     Expression<int>? id,
-    Expression<String>? name,
-    Expression<DateTime>? createdAt,
+    Expression<DateTime?>? createdAt,
     Expression<DateTime?>? updatedAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (name != null) 'name': name,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
     });
   }
 
-  DevolopsCompanion copyWith(
+  DevolopTableCompanion copyWith(
       {Value<int>? id,
-      Value<String>? name,
-      Value<DateTime>? createdAt,
+      Value<DateTime?>? createdAt,
       Value<DateTime?>? updatedAt}) {
-    return DevolopsCompanion(
+    return DevolopTableCompanion(
       id: id ?? this.id,
-      name: name ?? this.name,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -156,11 +139,8 @@ class DevolopsCompanion extends UpdateCompanion<Devolop> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
     if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
+      map['created_at'] = Variable<DateTime?>(createdAt.value);
     }
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime?>(updatedAt.value);
@@ -170,9 +150,8 @@ class DevolopsCompanion extends UpdateCompanion<Devolop> {
 
   @override
   String toString() {
-    return (StringBuffer('DevolopsCompanion(')
+    return (StringBuffer('DevolopTableCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -180,11 +159,12 @@ class DevolopsCompanion extends UpdateCompanion<Devolop> {
   }
 }
 
-class $DevolopsTable extends Devolops with TableInfo<$DevolopsTable, Devolop> {
+class $DevolopTableTable extends DevolopTable
+    with TableInfo<$DevolopTableTable, DevelopEntity> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $DevolopsTable(this.attachedDatabase, [this._alias]);
+  $DevolopTableTable(this.attachedDatabase, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
@@ -192,45 +172,29 @@ class $DevolopsTable extends Devolops with TableInfo<$DevolopsTable, Devolop> {
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
-      'name', aliasedName, false,
-      additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 1, maxTextLength: 50),
-      type: const StringType(),
-      requiredDuringInsert: true);
   final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
   @override
   late final GeneratedColumn<DateTime?> createdAt = GeneratedColumn<DateTime?>(
-      'created_at', aliasedName, false,
-      type: const IntType(),
-      requiredDuringInsert: false,
-      defaultValue: currentDateAndTime);
+      'created_at', aliasedName, true,
+      type: const IntType(), requiredDuringInsert: false);
   final VerificationMeta _updatedAtMeta = const VerificationMeta('updatedAt');
   @override
   late final GeneratedColumn<DateTime?> updatedAt = GeneratedColumn<DateTime?>(
       'updated_at', aliasedName, true,
       type: const IntType(), requiredDuringInsert: false);
   @override
-  List<GeneratedColumn> get $columns => [id, name, createdAt, updatedAt];
+  List<GeneratedColumn> get $columns => [id, createdAt, updatedAt];
   @override
-  String get aliasedName => _alias ?? 'devolops';
+  String get aliasedName => _alias ?? 'devolop_table';
   @override
-  String get actualTableName => 'devolops';
+  String get actualTableName => 'devolop_table';
   @override
-  VerificationContext validateIntegrity(Insertable<Devolop> instance,
+  VerificationContext validateIntegrity(Insertable<DevelopEntity> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
     }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
@@ -246,31 +210,23 @@ class $DevolopsTable extends Devolops with TableInfo<$DevolopsTable, Devolop> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Devolop map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return Devolop.fromData(data, attachedDatabase,
+  DevelopEntity map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return DevelopEntity.fromData(data, attachedDatabase,
         prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
-  $DevolopsTable createAlias(String alias) {
-    return $DevolopsTable(attachedDatabase, alias);
+  $DevolopTableTable createAlias(String alias) {
+    return $DevolopTableTable(attachedDatabase, alias);
   }
 }
 
 abstract class _$DevolopDatabase extends GeneratedDatabase {
   _$DevolopDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  late final $DevolopsTable devolops = $DevolopsTable(this);
+  late final $DevolopTableTable devolopTable = $DevolopTableTable(this);
   late final DevolopDao devolopDao = DevolopDao(this as DevolopDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [devolops];
-}
-
-// **************************************************************************
-// DaoGenerator
-// **************************************************************************
-
-mixin _$DevolopDaoMixin on DatabaseAccessor<DevolopDatabase> {
-  $DevolopsTable get devolops => attachedDatabase.devolops;
+  List<DatabaseSchemaEntity> get allSchemaEntities => [devolopTable];
 }
