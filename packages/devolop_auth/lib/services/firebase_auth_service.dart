@@ -1,10 +1,27 @@
+// services/firebase_auth_service.dart
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../abstract/auth_service.dart';
 import '../models/user_model.dart';
+import '../constants.dart';
 
 class FirebaseAuthService extends AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  @override
+  Future<UserModel> signUp(
+      String email, String password, String username) async {
+    try {
+      UserCredential userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User? user = userCredential.user;
+      return UserModel(
+          id: user!.uid, email: user.email!, username: user.displayName ?? '');
+    } catch (e) {
+      print(SIGN_IN_ERROR);
+      throw e;
+    }
+  }
 
   @override
   Future<UserModel> signIn(String email, String password) async {
@@ -15,7 +32,7 @@ class FirebaseAuthService extends AuthService {
       return UserModel(
           id: user!.uid, email: user.email!, username: user.displayName ?? '');
     } catch (e) {
-      print("An error occurred: $e");
+      print(SIGN_IN_ERROR);
       throw e;
     }
   }
@@ -36,22 +53,103 @@ class FirebaseAuthService extends AuthService {
   }
 
   @override
-  Future<UserModel> create(UserModel entity) {
-    throw UnimplementedError('create() is not implemented');
+  Future<void> sendPasswordResetEmail(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
   @override
-  Future<UserModel> read(String id) {
-    throw UnimplementedError('read() is not implemented');
+  Future<void> sendEmailVerification() async {
+    User? user = _firebaseAuth.currentUser;
+    await user!.sendEmailVerification();
   }
 
   @override
-  Future<UserModel> update(UserModel entity) {
-    throw UnimplementedError('update() is not implemented');
+  Future<void> reloadUser() async {
+    User? user = _firebaseAuth.currentUser;
+    await user!.reload();
   }
 
   @override
-  Future<void> delete(String id) {
-    throw UnimplementedError('delete() is not implemented');
+  Future<bool> isEmailVerified() async {
+    User? user = _firebaseAuth.currentUser;
+    await user!.reload();
+    user = _firebaseAuth.currentUser;
+    return user!.emailVerified;
+  }
+
+  @override
+  Future<UserModel> create(UserModel entity) async {
+    try {
+      UserCredential userCredential =
+          await _firebaseAuth.createUserWithEmailAndPassword(
+              email: entity.email, password: entity.password!);
+
+      User user = userCredential.user!;
+
+      return UserModel(
+          id: user.uid,
+          email: user.email!,
+          username: entity.username,
+          role: entity.role,
+          status: entity.status);
+    } catch (e) {
+      print(SIGN_UP_ERROR);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    try {
+      User? user = _firebaseAuth.currentUser;
+      if (user != null) {
+        await user.delete();
+      }
+    } catch (e) {
+      print(SIGN_OUT_ERROR);
+      throw e;
+    }
+  }
+
+  @override
+  Future<UserModel> read(String id) async {
+    try {
+      User? user = _firebaseAuth.currentUser;
+      if (user != null) {
+        return UserModel(
+            id: user.uid,
+            email: user.email!,
+            username: user.displayName ?? '',
+            role: UserRole.user,
+            status: UserStatus.active);
+      } else {
+        throw Exception("User not found");
+      }
+    } catch (e) {
+      print(SIGN_OUT_ERROR);
+      throw e;
+    }
+  }
+
+  @override
+  Future<UserModel> update(UserModel entity) async {
+    try {
+      User? user = _firebaseAuth.currentUser;
+      if (user != null) {
+        await user.updateEmail(entity.email);
+        await user.updateDisplayName(entity.username);
+        return UserModel(
+            id: user.uid,
+            email: user.email!,
+            username: entity.username,
+            role: entity.role,
+            status: entity.status);
+      } else {
+        throw Exception("User not found");
+      }
+    } catch (e) {
+      print(SIGN_OUT_ERROR);
+      throw e;
+    }
   }
 }
