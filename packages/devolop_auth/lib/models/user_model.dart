@@ -1,4 +1,3 @@
-// models/user_model.dart
 import 'package:core/abstract/base_model.dart';
 
 enum UserRole { admin, user, guest }
@@ -18,6 +17,7 @@ class UserModel extends BaseModel {
     required this.username,
     this.role = UserRole.user,
     this.status = UserStatus.active,
+    this.password,
   }) : super(id: id);
 
   @override
@@ -28,6 +28,7 @@ class UserModel extends BaseModel {
       'username': username,
       'role': role.toString().split('.').last,
       'status': status.toString().split('.').last,
+      'password': password,
     };
   }
 
@@ -42,23 +43,7 @@ class UserModel extends BaseModel {
       status: UserStatus.values.firstWhere(
         (element) => element.toString().split('.').last == json['status'],
       ),
+      password: json['password'],
     );
-  }
-
-  UserModel copyWith({
-    String? id,
-    String? email,
-    String? username,
-    UserRole? role,
-    UserStatus? status,
-    String? password,
-  }) {
-    return UserModel(
-      id: id ?? this.id,
-      email: email ?? this.email,
-      username: username ?? this.username,
-      role: role ?? this.role,
-      status: status ?? this.status,
-    )..password = password ?? this.password;
   }
 }

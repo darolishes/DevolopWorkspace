@@ -8,6 +8,14 @@ import '../constants.dart';
 class FirebaseAuthService extends AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
+  UserModel _userFromFirebase(User? user) {
+    return UserModel(
+      id: user!.uid,
+      email: user.email!,
+      username: user.displayName ?? '',
+    );
+  }
+
   @override
   Future<UserModel> signUp(
       String email, String password, String username) async {
@@ -28,9 +36,7 @@ class FirebaseAuthService extends AuthService {
     try {
       UserCredential userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-      User? user = userCredential.user;
-      return UserModel(
-          id: user!.uid, email: user.email!, username: user.displayName ?? '');
+      return _userFromFirebase(userCredential.user);
     } catch (e) {
       print(SIGN_IN_ERROR);
       throw e;
@@ -45,9 +51,16 @@ class FirebaseAuthService extends AuthService {
   @override
   Future<UserModel?> getCurrentUser() async {
     User? user = _firebaseAuth.currentUser;
-    if (user != null) {
+    await user?.reload();
+    user = _firebaseAuth.currentUser;
+
+    if (user != null && user.emailVerified) {
+      // Optional: Check if the email is verified
       return UserModel(
-          id: user.uid, email: user.email!, username: user.displayName ?? '');
+        id: user.uid,
+        email: user.email!,
+        username: user.displayName ?? '',
+      );
     }
     return null;
   }
@@ -61,12 +74,6 @@ class FirebaseAuthService extends AuthService {
   Future<void> sendEmailVerification() async {
     User? user = _firebaseAuth.currentUser;
     await user!.sendEmailVerification();
-  }
-
-  @override
-  Future<void> reloadUser() async {
-    User? user = _firebaseAuth.currentUser;
-    await user!.reload();
   }
 
   @override
