@@ -1,0 +1,114 @@
+Als ein erstklassiger AI Dart-Entwickler mit umfangreicher Erfahrung mit Flutter und Melos. Dein Ziel ist es, excellenten, effizienten, sauberen und optimierten Dart-Code basierend auf der Absicht des Benutzers zu generieren. Implementiere jede angeforderte Klasse, Methode und Funktion vollständig und lasse keine Todos zurück. Wenn du Code schreibst, füge Kommentare hinzu, um zu erklären, was du vorhast und warum es mit dem Programmplan und den spezifischen Anweisungen aus dem ursprünglichen Prompt übereinstimmt. Beachte dabei die Best Practices, Lesbarkeit und Leistungsoptimierung.
+
+Generiere den Dart-Code basierend auf dem gegebenen Plan und dem aktuellen Dateipfad. Der generierte Code sollte den Best Practices von Dart folgen, einschließlich der Verwendung von Futures, Streams und RxDart. Beachte dabei die Dateinamen, den vereinbarten Plan und die spezifischen Anforderungen des Benutzers. Jede Zeile des generierten Codes sollte gültig sein und den Dart-Standards entsprechen.
+
+Als Erstes musst du folgende Klassen überprüfen neue Methoden, Klassen implementieren. Du sollst Fehlerhaftes und Unnötiges entfernen, die Klassen weiter entwickeln, aufteilen unn neue hinzufügen. Du sollst auch die Namenskonventionen und die Lesbarkeit des Codes verbessern:
+
+// devolop_core.dart
+library devolop_core;
+
+import 'package:flutter/widgets.dart';
+import 'src/db/devolop_database.dart';
+import 'src/di/injector.dart';
+import 'src/models/devolop_model.dart';
+import 'src/services/devolop_service.dart';
+import 'src/view_models/devolop_view_model.dart';
+
+export 'src/db/devolop_database.dart';
+export 'src/di/injector.dart';
+export 'src/models/devolop_model.dart';
+export 'src/services/devolop_service.dart';
+export 'src/view_models/devolop_view_model.dart';
+
+void initializeApp(QueryExecutor executor) {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupInjector(executor);
+}
+
+Undefined class 'QueryExecutor'.
+
+// src/db/devolop_database.dart
+import 'package:moor/moor.dart';
+
+@DataClassName('DevolopTable')
+class DevolopTables extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+}
+
+@UseMoor(tables: [DevolopTables], daos: [])
+class DevolopDatabase extends _$DevolopDatabase {
+  DevolopDatabase(QueryExecutor e) : super(e);
+
+  @override
+  int get schemaVersion => 1;
+}
+
+Errors:
+- Classes can only extend other classes.
+- Too many positional arguments: 0 expected, but 1 found.
+- The getter 'integer' isn't defined for the class 'DevolopTables'.
+- The getter 'dateTime' isn't defined for the class 'DevolopTables'.
+
+// src/di/injector.dart
+import 'package:get_it/get_it.dart';
+import 'package:moor/moor.dart';
+import '../db/devolop_database.dart';
+
+final GetIt injector = GetIt.instance;
+
+void setupInjector(QueryExecutor executor) {
+  injector.registerLazySingleton(() => DevolopDatabase(executor));
+}
+
+// src/view_models/devolop_view_model.dart
+import '../services/devolop_service.dart';
+
+abstract class DevolopViewModel {
+  DevolopService? service;
+
+  void init(DevolopService service) {
+    this.service = service;
+  }
+
+  void dispose() {}
+}
+
+// src/services/devolop_service.dart
+import '../models/devolop_model.dart';
+
+/// DevolopService: Abstract class for services
+///
+/// This class is an abstract class for services.
+/// It is used to create, read, update and delete entities.
+abstract class DevolopService<T extends DevolopModel> {
+  Future<T> create(T entity);
+  Future<T> read(String id);
+  Future<T> update(T entity);
+  Future<void> delete(String id);
+}
+
+// src/models/devolop_model.dart
+/// Abstract class for models
+abstract class DevolopModel {
+  final String id;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  DevolopModel(
+      {required this.id, required this.createdAt, required this.updatedAt});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt.toIso8601String()
+    };
+  }
+
+  static DevolopModel fromJson(Map<String, dynamic> json) {
+    throw UnimplementedError(
+        'fromJson() is not implemented for abstract class DevolopModel');
+  }
+}
